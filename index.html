@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSPD Dashboard - Corleone City</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: #0a0a0b;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Hintergrundbild */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('background.jpg') center center / cover no-repeat,
+                        linear-gradient(135deg, #0a1628 0%, #1a1a2e 50%, #0f0f23 100%);
+            z-index: -2;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+            z-index: -1;
+        }
+
+        /* Header Logo */
+        .header {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            background: url('logo.png') center center / contain no-repeat;
+            z-index: 100;
+        }
+
+        .header-overlay {
+            display: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .header-title span {
+            color: #3b82f6;
+        }
+
+        /* Main Content */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 300px 20px 60px;
+        }
+
+        .logo-container {
+            margin-bottom: 50px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .main-logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            box-shadow:
+                0 0 40px rgba(59, 130, 246, 0.4),
+                0 0 80px rgba(59, 130, 246, 0.2),
+                inset 0 0 30px rgba(59, 130, 246, 0.1);
+            border: 3px solid rgba(59, 130, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .main-logo:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 60px rgba(59, 130, 246, 0.6),
+                0 0 100px rgba(59, 130, 246, 0.3),
+                inset 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .welcome-text h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .welcome-text h1 span {
+            color: #3b82f6;
+        }
+
+        .welcome-text p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Dashboard Links */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 1600px;
+            width: 100%;
+        }
+
+        @media (max-width: 1400px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dashboard-card {
+            background: rgba(20, 20, 22, 0.9);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .dashboard-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Akten Card */
+        .card-akten .card-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+
+        /* Personal Card */
+        .card-personal .card-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .card-personal:hover {
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Leitstelle Card */
+        .card-leitstelle .card-icon {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .card-leitstelle:hover {
+            border-color: rgba(245, 158, 11, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Handbuch Card */
+        .card-handbuch .card-icon {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+        }
+
+        .card-handbuch:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Generator Card */
+        .card-generator .card-icon {
+            background: linear-gradient(135deg, #ffcc00 0%, #f59e0b 100%);
+        }
+
+        .card-generator:hover {
+            border-color: rgba(255, 204, 0, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(255, 204, 0, 0.2);
+        }
+
+        /* Rechner Card */
+        .card-rechner .card-icon {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .card-rechner:hover {
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.4),
+                0 0 40px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .footer span {
+            color: #3b82f6;
+        }
+
+        /* Motto */
+        .motto {
+            margin-top: 50px;
+            font-size: 24px;
+            font-style: italic;
+            color: rgba(255,255,255,0.4);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 2px;
+        }
+
+        .motto span {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="background-overlay"></div>
+
+    <header class="header"></header>
+
+    <main class="main">
+        <div class="welcome-text">
+            <h1>Willkommen beim <span>LSPD</span></h1>
+            <p>Corleone City - Interne Systeme</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="https://pc.copnet.li" class="dashboard-card card-akten" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <h3 class="card-title">Aktensystem</h3>
+                <p class="card-description">Bürger- und Fahrzeugakten verwalten</p>
+            </a>
+
+            <a href="https://personal.corleone-lspd.de" class="dashboard-card card-personal" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="card-title">Personalsystem</h3>
+                <p class="card-description">Mitarbeiter & Beförderungen</p>
+            </a>
+
+            <a href="https://leitstelle-cc.de/leitstelle" class="dashboard-card card-leitstelle" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-broadcast-tower"></i>
+                </div>
+                <h3 class="card-title">Leitstelle</h3>
+                <p class="card-description">Einsatzkoordination & Funk</p>
+            </a>
+
+            <a href="https://diensthandbuch.corleone-lspd.de" class="dashboard-card card-handbuch" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="card-title">Diensthandbuch</h3>
+                <p class="card-description">Richtlinien & Vorschriften</p>
+            </a>
+
+            <a href="https://generator.corleone-lspd.de" class="dashboard-card card-generator" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <h3 class="card-title">Generatoren</h3>
+                <p class="card-description">Akten, Einsatzberichte & Razzien</p>
+            </a>
+
+            <a href="https://old.statenet.at/corleone/rechner/" class="dashboard-card card-rechner" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="card-title">Straftatenrechner</h3>
+                <p class="card-description">Strafen & Hafteinheiten berechnen</p>
+            </a>
+        </div>
+
+        <p class="motto">"<span>Obey and Survive</span>"</p>
+    </main>
+
+    <footer class="footer">
+        Mit <span style="color: #ef4444;">❤</span> gemacht von <span>Tommy</span>
+    </footer>
+</body>
+</html>
