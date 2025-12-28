@@ -152,11 +152,17 @@
         /* Dashboard Links */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             width: 100%;
             justify-content: center;
+        }
+
+        @media (max-width: 1400px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 1100px) {
@@ -359,6 +365,14 @@
                 </div>
                 <h3 class="card-title">Diensthandbuch</h3>
                 <p class="card-description">Richtlinien & Vorschriften</p>
+            </a>
+
+            <a href="https://karte.corleone-lspd.de" class="dashboard-card card-karte" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3 class="card-title">Ortskunde - Karte</h3>
+                <p class="card-description">Interaktive Stadtkarte mit Bezirken</p>
             </a>
 
         </div>
