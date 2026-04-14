@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LSPD Dashboard - Corleone City</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    <title>LSPD Dashboard - Corleone City | Powered by LawNet</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,77 +17,149 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            background: #0a0a0b;
+            background: #08080c;
             color: white;
             overflow-x: hidden;
         }
 
-        /* Hintergrundbild */
+        /* Animated Background */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('background.jpg') center center / cover no-repeat,
-                        linear-gradient(135deg, #0a1628 0%, #1a1a2e 50%, #0f0f23 100%);
-            z-index: -2;
+            background: linear-gradient(135deg, #0a0a14 0%, #12121f 40%, #0d0d1a 70%, #080810 100%);
+            z-index: -3;
         }
 
-        .background-overlay {
+        .bg-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
-            z-index: -1;
+            background-image:
+                linear-gradient(rgba(232, 116, 34, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(232, 116, 34, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -2;
         }
 
-        /* Header Logo */
+        .bg-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(800px circle at 50% 0%, rgba(232, 116, 34, 0.08) 0%, transparent 50%),
+                radial-gradient(600px circle at 80% 60%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
+                radial-gradient(600px circle at 20% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 40%);
+            z-index: -1;
+            animation: glowPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(232, 116, 34, 0.4);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+        }
+
+        .particle:nth-child(odd) {
+            background: rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* Header */
         .header {
             position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 250px;
-            height: 250px;
-            background: url('logo.png') center center / contain no-repeat;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
-        }
-
-        .header-overlay {
-            display: none;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
             display: flex;
             align-items: center;
-            gap: 20px;
+            justify-content: center;
+            gap: 16px;
+            padding: 18px 30px;
+            background: rgba(10, 10, 16, 0.6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(232, 116, 34, 0.1);
+            animation: slideDown 0.8s ease-out;
         }
 
-        .header-logo {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid rgba(59, 130, 246, 0.5);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header img {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1.5px solid rgba(232, 116, 34, 0.3);
+            box-shadow: 0 0 20px rgba(232, 116, 34, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .header img:hover {
+            border-color: rgba(232, 116, 34, 0.6);
+            box-shadow: 0 0 30px rgba(232, 116, 34, 0.3);
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
         }
 
         .header-title {
-            font-size: 24px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 2px;
         }
 
         .header-title span {
-            color: #3b82f6;
+            background: linear-gradient(135deg, #e87422, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 10px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 500;
         }
 
         /* Main Content */
@@ -94,97 +169,71 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 300px 20px 60px;
-        }
-
-        .logo-container {
-            margin-bottom: 50px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .main-logo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            box-shadow:
-                0 0 40px rgba(59, 130, 246, 0.4),
-                0 0 80px rgba(59, 130, 246, 0.2),
-                inset 0 0 30px rgba(59, 130, 246, 0.1);
-            border: 3px solid rgba(59, 130, 246, 0.5);
-            transition: all 0.3s ease;
-        }
-
-        .main-logo:hover {
-            transform: scale(1.05);
-            box-shadow:
-                0 0 60px rgba(59, 130, 246, 0.6),
-                0 0 100px rgba(59, 130, 246, 0.3),
-                inset 0 0 40px rgba(59, 130, 246, 0.2);
+            padding: 120px 20px 80px;
         }
 
         .welcome-text {
             text-align: center;
             margin-bottom: 60px;
+            animation: fadeUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .welcome-text h1 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
         .welcome-text h1 span {
-            color: #3b82f6;
+            background: linear-gradient(135deg, #e87422, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .welcome-text p {
-            font-size: 18px;
-            color: rgba(255,255,255,0.7);
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            font-size: 17px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 400;
+            letter-spacing: 0.5px;
         }
 
-        /* Dashboard Links */
+        /* Dashboard Grid */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            max-width: 1400px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            max-width: 1300px;
             width: 100%;
-            justify-content: center;
+            animation: fadeUp 1s ease-out 0.6s both;
         }
 
         @media (max-width: 1400px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
         }
-
-        @media (max-width: 1100px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
         @media (max-width: 600px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .welcome-text h1 { font-size: 32px; }
         }
 
+        /* Cards */
         .dashboard-card {
-            background: rgba(20, 20, 22, 0.9);
+            background: rgba(16, 16, 24, 0.7);
             border-radius: 20px;
-            padding: 40px 30px;
+            padding: 36px 24px;
             text-align: center;
             text-decoration: none;
             color: white;
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
@@ -196,98 +245,143 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            right: 0;
+            height: 2px;
+            background: var(--card-color);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .dashboard-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.4),
-                0 0 40px rgba(59, 130, 246, 0.2);
+        .dashboard-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, var(--card-color-alpha) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
-        .dashboard-card:hover::before {
-            opacity: 1;
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-color-border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px var(--card-color-alpha);
         }
+
+        .dashboard-card:hover::before { opacity: 1; }
+        .dashboard-card:hover::after { opacity: 1; }
 
         .card-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 20px;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            background: var(--card-color);
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-            transition: all 0.3s ease;
+            font-size: 30px;
+            box-shadow: 0 8px 25px var(--card-color-alpha);
+            transition: all 0.4s ease;
         }
 
         .dashboard-card:hover .card-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 14px 35px var(--card-color-alpha);
         }
 
         .card-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
             position: relative;
             z-index: 1;
         }
 
         .card-description {
-            font-size: 14px;
-            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
             position: relative;
             z-index: 1;
+            font-weight: 400;
         }
 
-        /* Akten Card */
-        .card-akten .card-icon {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        /* Card Colors */
+        .card-akten {
+            --card-color: linear-gradient(135deg, #e87422, #c45e10);
+            --card-color-alpha: rgba(232, 116, 34, 0.15);
+            --card-color-border: rgba(232, 116, 34, 0.4);
+        }
+        .card-personal {
+            --card-color: linear-gradient(135deg, #10b981, #059669);
+            --card-color-alpha: rgba(16, 185, 129, 0.15);
+            --card-color-border: rgba(16, 185, 129, 0.4);
+        }
+        .card-leitstelle {
+            --card-color: linear-gradient(135deg, #f59e0b, #d97706);
+            --card-color-alpha: rgba(245, 158, 11, 0.15);
+            --card-color-border: rgba(245, 158, 11, 0.4);
+        }
+        .card-handbuch {
+            --card-color: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            --card-color-alpha: rgba(139, 92, 246, 0.15);
+            --card-color-border: rgba(139, 92, 246, 0.4);
+        }
+        .card-karte {
+            --card-color: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            --card-color-alpha: rgba(59, 130, 246, 0.15);
+            --card-color-border: rgba(59, 130, 246, 0.4);
+        }
+        .card-dienstblatt {
+            --card-color: linear-gradient(135deg, #ec4899, #be185d);
+            --card-color-alpha: rgba(236, 72, 153, 0.15);
+            --card-color-border: rgba(236, 72, 153, 0.4);
+        }
+        .card-azubinet {
+            --card-color: linear-gradient(135deg, #06b6d4, #0e7490);
+            --card-color-alpha: rgba(6, 182, 212, 0.15);
+            --card-color-border: rgba(6, 182, 212, 0.4);
         }
 
-        /* Personal Card */
-        .card-personal .card-icon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        .card-icon { background: var(--card-color); }
+
+        /* Status dot */
+        .card-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+            animation: statusPulse 2s ease-in-out infinite;
+            vertical-align: middle;
         }
 
-        .card-personal:hover {
-            border-color: rgba(16, 185, 129, 0.6);
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.4),
-                0 0 40px rgba(16, 185, 129, 0.2);
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
-        /* Leitstelle Card */
-        .card-leitstelle .card-icon {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        /* Motto */
+        .motto {
+            margin-top: 50px;
+            font-size: 22px;
+            font-style: italic;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 2px;
+            font-weight: 400;
+            animation: fadeUp 1s ease-out 0.9s both;
         }
 
-        .card-leitstelle:hover {
-            border-color: rgba(245, 158, 11, 0.6);
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.4),
-                0 0 40px rgba(245, 158, 11, 0.2);
-        }
-
-        /* Handbuch Card */
-        .card-handbuch .card-icon {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-        }
-
-        .card-handbuch:hover {
-            border-color: rgba(139, 92, 246, 0.6);
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.4),
-                0 0 40px rgba(139, 92, 246, 0.2);
+        .motto span {
+            background: linear-gradient(135deg, #e87422, #f5a623);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Footer */
@@ -296,42 +390,50 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             text-align: center;
-            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
-            font-size: 13px;
-            color: rgba(255,255,255,0.5);
+            background: linear-gradient(0deg, rgba(8,8,12,0.95) 0%, transparent 100%);
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.5px;
+            z-index: 50;
         }
 
         .footer span {
-            color: #3b82f6;
+            color: #e87422;
+            font-weight: 600;
         }
 
-        /* Motto */
-        .motto {
-            margin-top: 50px;
-            font-size: 24px;
-            font-style: italic;
-            color: rgba(255,255,255,0.4);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            letter-spacing: 2px;
+        .footer a {
+            color: #e87422;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
-        .motto span {
-            color: #3b82f6;
+        .footer a:hover {
+            color: #f5a623;
         }
     </style>
 </head>
 <body>
     <div class="background"></div>
-    <div class="background-overlay"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    <div class="particles" id="particles"></div>
 
-    <header class="header"></header>
+    <header class="header">
+        <img src="lawnet-logo.png" alt="LawNet Logo">
+        <div class="header-brand">
+            <div class="header-title"><span>Law</span>Net</div>
+            <div class="header-subtitle">Powered by LawNet-Team</div>
+        </div>
+    </header>
 
     <main class="main">
         <div class="welcome-text">
             <h1>Willkommen beim <span>LSPD</span></h1>
-            <p>Corleone City - Interne Systeme</p>
+            <p>Corleone City &mdash; Interne Systeme</p>
         </div>
 
         <div class="dashboard-grid">
@@ -339,23 +441,23 @@
                 <div class="card-icon">
                     <i class="fas fa-folder-open"></i>
                 </div>
-                <h3 class="card-title">Aktensystem</h3>
-                <p class="card-description">Bürger- und Fahrzeugakten verwalten</p>
+                <h3 class="card-title"><span class="card-status"></span>Aktensystem</h3>
+                <p class="card-description">Burger- und Fahrzeugakten verwalten</p>
             </a>
 
             <a href="https://personal.corleone-lspd.de" class="dashboard-card card-personal" target="_blank">
                 <div class="card-icon">
                     <i class="fas fa-users"></i>
                 </div>
-                <h3 class="card-title">Personalsystem</h3>
-                <p class="card-description">Mitarbeiter & Beförderungen</p>
+                <h3 class="card-title"><span class="card-status"></span>Personalsystem</h3>
+                <p class="card-description">Mitarbeiter & Beforderungen</p>
             </a>
 
-            <a href="https://leitstelle-cc.de/leitstelle" class="dashboard-card card-leitstelle" target="_blank">
+            <a href="https://leitstelle.corleone-lspd.de" class="dashboard-card card-leitstelle" target="_blank">
                 <div class="card-icon">
                     <i class="fas fa-broadcast-tower"></i>
                 </div>
-                <h3 class="card-title">Leitstelle</h3>
+                <h3 class="card-title"><span class="card-status"></span>Leitstelle</h3>
                 <p class="card-description">Einsatzkoordination & Funk</p>
             </a>
 
@@ -363,7 +465,7 @@
                 <div class="card-icon">
                     <i class="fas fa-book"></i>
                 </div>
-                <h3 class="card-title">Diensthandbuch</h3>
+                <h3 class="card-title"><span class="card-status"></span>Diensthandbuch</h3>
                 <p class="card-description">Richtlinien & Vorschriften</p>
             </a>
 
@@ -371,17 +473,46 @@
                 <div class="card-icon">
                     <i class="fas fa-map-marked-alt"></i>
                 </div>
-                <h3 class="card-title">Ortskunde - Karte</h3>
+                <h3 class="card-title"><span class="card-status"></span>Ortskunde - Karte</h3>
                 <p class="card-description">Interaktive Stadtkarte mit Bezirken</p>
             </a>
 
+            <a href="https://dienstblatt.corleone-lspd.de" class="dashboard-card card-dienstblatt" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h3 class="card-title"><span class="card-status"></span>Dienstblatt</h3>
+                <p class="card-description">Dienstpläne & Schichtübersicht</p>
+            </a>
+
+            <a href="https://azubinet.corleone-lspd.de" class="dashboard-card card-azubinet" target="_blank">
+                <div class="card-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="card-title"><span class="card-status"></span>AzubiNet</h3>
+                <p class="card-description">Ausbildung & Lernmaterialien</p>
+            </a>
         </div>
 
         <p class="motto">"<span>Obey and Survive</span>"</p>
     </main>
 
     <footer class="footer">
-        Mit <span style="color: #ef4444;">❤</span> gemacht von <span>Tommy</span>
+        Powered by <a href="https://github.com/LawNet-Team" target="_blank">LawNet-Team</a> &middot; Mit <span style="color: #ef4444;">&#10084;</span> gemacht von <span>Tommy</span>
     </footer>
+
+    <script>
+        // Generate floating particles
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (8 + Math.random() * 12) + 's';
+            p.style.animationDelay = (Math.random() * 10) + 's';
+            p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+            container.appendChild(p);
+        }
+    </script>
 </body>
 </html>
