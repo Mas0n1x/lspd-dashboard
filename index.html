@@ -206,22 +206,28 @@
 
         /* Dashboard Grid */
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             gap: 18px;
             max-width: 1300px;
             width: 100%;
             animation: fadeUp 1s ease-out 0.6s both;
         }
 
-        @media (max-width: 1400px) {
-            .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+        .dashboard-card {
+            flex: 0 1 calc((100% - 54px) / 4);
+            min-width: 240px;
+        }
+
+        @media (max-width: 1100px) {
+            .dashboard-card { flex-basis: calc((100% - 36px) / 3); }
         }
         @media (max-width: 900px) {
-            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-card { flex-basis: calc((100% - 18px) / 2); }
         }
         @media (max-width: 600px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
+            .dashboard-card { flex-basis: 100%; }
             .welcome-text h1 { font-size: 32px; }
         }
 
